@@ -1,0 +1,28 @@
+version: "3.3"
+
+services:
+  db:
+    image: postgres:12-alpine
+    container_name: trampoz-postgres
+    restart: unless-stopped
+    volumes:
+        - ./sql-initial-files:/docker-entrypoint-initdb.d
+    environment:
+      POSTGRES_HOST: localhost
+      POSTGRES_USER: matheus
+      POSTGRES_PASSWORD: bd123
+      POSTGRES_DB: trampoz
+      LANG: pt_BR.UTF-8
+    ports:
+      - 5433:5432
+    logging:
+      options:
+        max-size: "5m"
+        max-file: "3"
+
+  adminer:
+    image: adminer
+    container_name: trampoz-adminer
+    restart: unless-stopped
+    ports:
+      - 8080:8080
