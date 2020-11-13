@@ -14,11 +14,16 @@ public class AuthFilter implements Filter {
 
     private ServletContext context;
     private UserService userService;
+    private List<String> whiteListUrls;
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
         this.context = filterConfig.getServletContext();
         this.userService = new UserService();
+        this.whiteListUrls = new ArrayList<>(Arrays.asList(
+                "/freelancers",
+                "/contractors"
+        ));
     }
 
     @Override
@@ -26,11 +31,7 @@ public class AuthFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
 
-        List<String> whiteListUrls = new ArrayList<>(Arrays.asList(
-                "/freelancers",
-                "/contractors"
-        ));
-        Boolean isUrlInWhiteList = whiteListUrls.contains(req.getServletPath());
+        Boolean isUrlInWhiteList = this.whiteListUrls.contains(req.getServletPath());
         Boolean isPost = req.getMethod().equals("POST");
 
         if (isPost && isUrlInWhiteList) {
