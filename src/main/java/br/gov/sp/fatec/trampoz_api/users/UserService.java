@@ -3,6 +3,7 @@ package br.gov.sp.fatec.trampoz_api.users;
 import br.gov.sp.fatec.trampoz_api.freelancers.FreelancerEntity;
 import br.gov.sp.fatec.trampoz_api.shared.GenericService;
 
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceException;
 import javax.persistence.TypedQuery;
 import java.util.UUID;
@@ -15,15 +16,27 @@ public class UserService extends GenericService implements UserDao {
     }
 
     @Override
+    public UserEntity findByEmail(String email) {
+        String jpql = "select u from UserEntity u where u.email = :email";
+
+        TypedQuery<UserEntity> typedQuery = entityManager.createQuery(jpql, UserEntity.class);
+        typedQuery.setParameter("email", email);
+
+        try {
+            return typedQuery.getSingleResult();
+        } catch (NoResultException exception) {
+            return null;
+        }
+    }
+
+    @Override
     public Boolean checkIfEmailAlreadyInUse(String email) {
         String jpql = "select count(id) from UserEntity u where u.email = :email";
 
         TypedQuery<Long> typedQuery = entityManager.createQuery(jpql, Long.class);
         typedQuery.setParameter("email", email);
 
-        Boolean emailAlreadyInUse = (Long) typedQuery.getSingleResult() > 0;
-
-        return emailAlreadyInUse;
+        return (Long) typedQuery.getSingleResult() > 0;
     }
 
     @Override

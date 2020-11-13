@@ -3,11 +3,18 @@ package br.gov.sp.fatec.trampoz_api.freelancers;
 import br.gov.sp.fatec.trampoz_api.roles.RoleEntity;
 import br.gov.sp.fatec.trampoz_api.roles.RolesEnum;
 import br.gov.sp.fatec.trampoz_api.roles.RolesService;
+import br.gov.sp.fatec.trampoz_api.users.UserEntity;
 import br.gov.sp.fatec.trampoz_api.users.UserService;
 
 import javax.persistence.PersistenceException;
+import java.util.UUID;
 
 public class FreelancersService extends UserService implements FreelancersDao {
+
+    @Override
+    public FreelancerEntity findById(UUID id) {
+        return entityManager.find(FreelancerEntity.class, id);
+    }
 
     @Override
     public void create(FreelancerEntity freelancer) {

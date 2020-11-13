@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.UUID;
 
 public class FreelancersController extends HttpServlet {
 
@@ -24,34 +25,48 @@ public class FreelancersController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-        res.getWriter().print("freelancers");
+        res.setContentType("application/json");
+        res.setCharacterEncoding("UTF-8");
+
+        PrintWriter out = res.getWriter();
+
+        UUID id = UUID.fromString(req.getParameter("id"));
+        FreelancerEntity freelancer = freelancersService.findById(id);
+
+        if (freelancer != null) {
+            String responseJson = objectMapper.writeValueAsString(freelancer);
+            out.print(responseJson);
+            res.setStatus(HttpServletResponse.SC_OK);
+        } else {
+            ObjectNode freelancerJson = objectMapper.createObjectNode().put("error", "user not found");
+            out.print(freelancerJson);
+            res.setStatus(HttpServletResponse.SC_NOT_FOUND);
+        }
+        out.flush();
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        FreelancerEntity freelancer = objectMapper.readValue(req.getReader(), FreelancerEntity.class);
+        resp.setContentType("application/json");
+        resp.setCharacterEncoding("UTF-8");
+
         PrintWriter out = resp.getWriter();
 
-        try {
-            Boolean emailAlreadyInUse = freelancersService.checkIfEmailAlreadyInUse(freelancer.getEmail());
-            if (emailAlreadyInUse) {
-                ObjectNode responseJson = objectMapper.createObjectNode().put("error", "Email already in use");
-                out.print(responseJson);
+        FreelancerEntity freelancer = objectMapper.readValue(req.getReader(), FreelancerEntity.class);
 
-                resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            } else {
-                freelancersService.createAndCommit(freelancer);
-                String freelancerJson = objectMapper.writeValueAsString(freelancer);
-                out.print(freelancerJson);
-                resp.setStatus(HttpServletResponse.SC_CREATED);
-            }
-            resp.setContentType("application/json");
-            resp.setCharacterEncoding("UTF-8");
+        Boolean emailAlreadyInUse = freelancersService.checkIfEmailAlreadyInUse(freelancer.getEmail());
+        if (emailAlreadyInUse) {
+            ObjectNode responseJson = objectMapper.createObjectNode().put("error", "Email already in use");
+            out.print(responseJson);
 
-            out.flush();
-        } catch (Exception e) {
-            resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-            e.printStackTrace();
+            resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        } else {
+            freelancersService.createAndCommit(freelancer);
+            String freelancerJson = objectMapper.writeValueAsString(freelancer);
+            out.print(freelancerJson);
+            resp.setStatus(HttpServletResponse.SC_CREATED);
         }
+
+        out.flush();
     }
 }

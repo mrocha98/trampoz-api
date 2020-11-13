@@ -3,11 +3,13 @@ package br.gov.sp.fatec.trampoz_api.users;
 import java.util.UUID;
 
 public interface UserDao {
-    public UserEntity findById(UUID id);
+    UserEntity findById(UUID id);
 
-    public Boolean checkIfEmailAlreadyInUse(String email);
+    UserEntity findByEmail(String email);
 
-    public void delete(UUID id);
+    Boolean checkIfEmailAlreadyInUse(String email);
 
-    public void deleteAndCommit(UUID id);
+    void delete(UUID id);
+
+    void deleteAndCommit(UUID id);
 }
