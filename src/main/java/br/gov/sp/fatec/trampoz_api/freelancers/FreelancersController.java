@@ -1,5 +1,6 @@
 package br.gov.sp.fatec.trampoz_api.freelancers;
 
+import br.gov.sp.fatec.trampoz_api.shared.LocationHeaderUtils;
 import br.gov.sp.fatec.trampoz_api.users.UserEntity;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -14,9 +15,9 @@ import java.util.UUID;
 
 public class FreelancersController extends HttpServlet {
 
-    private static final Long serialVersionUID = 4787108556148621714l;
-    private ObjectMapper objectMapper;
-    private FreelancersService freelancersService;
+    private static final Long serialVersionUID = 4787108556148621714L;
+    private final ObjectMapper objectMapper;
+    private final FreelancersService freelancersService;
 
     public FreelancersController() {
         objectMapper = new ObjectMapper();
@@ -46,25 +47,27 @@ public class FreelancersController extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.setContentType("application/json");
-        resp.setCharacterEncoding("UTF-8");
+    protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+        res.setContentType("application/json");
+        res.setCharacterEncoding("UTF-8");
 
-        PrintWriter out = resp.getWriter();
+        PrintWriter out = res.getWriter();
 
         FreelancerEntity freelancer = objectMapper.readValue(req.getReader(), FreelancerEntity.class);
 
-        Boolean emailAlreadyInUse = freelancersService.checkIfEmailAlreadyInUse(freelancer.getEmail());
-        if (emailAlreadyInUse) {
+        boolean EMAIL_ALREADY_IN_USE = freelancersService.checkIfEmailAlreadyInUse(freelancer.getEmail());
+        if (EMAIL_ALREADY_IN_USE) {
             ObjectNode responseJson = objectMapper.createObjectNode().put("error", "Email already in use");
             out.print(responseJson);
 
-            resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
         } else {
             freelancersService.createAndCommit(freelancer);
             String freelancerJson = objectMapper.writeValueAsString(freelancer);
             out.print(freelancerJson);
-            resp.setStatus(HttpServletResponse.SC_CREATED);
+
+            res.setStatus(HttpServletResponse.SC_CREATED);
+            LocationHeaderUtils.create(res, "/freelancers", freelancer.getId());
         }
 
         out.flush();

@@ -3,7 +3,6 @@ package br.gov.sp.fatec.trampoz_api.freelancers;
 import br.gov.sp.fatec.trampoz_api.roles.RoleEntity;
 import br.gov.sp.fatec.trampoz_api.roles.RolesEnum;
 import br.gov.sp.fatec.trampoz_api.roles.RolesService;
-import br.gov.sp.fatec.trampoz_api.users.UserEntity;
 import br.gov.sp.fatec.trampoz_api.users.UserService;
 
 import javax.persistence.PersistenceException;

@@ -6,7 +6,4 @@ public interface ContractorsDao {
 
     void createAndCommit(ContractorEntity contractor);
 
-    void update(ContractorEntity contractor);
-
-    void updateAndCommit(ContractorEntity contractor);
 }

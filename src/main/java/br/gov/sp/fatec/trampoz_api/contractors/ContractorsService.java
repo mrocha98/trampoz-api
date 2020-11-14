@@ -3,11 +3,11 @@ package br.gov.sp.fatec.trampoz_api.contractors;
 import br.gov.sp.fatec.trampoz_api.roles.RoleEntity;
 import br.gov.sp.fatec.trampoz_api.roles.RolesEnum;
 import br.gov.sp.fatec.trampoz_api.roles.RolesService;
-import br.gov.sp.fatec.trampoz_api.shared.GenericService;
+import br.gov.sp.fatec.trampoz_api.users.UserService;
 
 import javax.persistence.PersistenceException;
 
-public class ContractorsService extends GenericService implements ContractorsDao {
+public class ContractorsService extends UserService implements ContractorsDao {
 
     @Override
     public void create(ContractorEntity contractor) {
@@ -29,25 +29,4 @@ public class ContractorsService extends GenericService implements ContractorsDao
         }
     }
 
-    @Override
-    public void update(ContractorEntity contractor) {
-        if (contractor.getId() == null) {
-            create(contractor);
-            return;
-        }
-
-        entityManager.merge(contractor);
-    }
-
-    @Override
-    public void updateAndCommit(ContractorEntity contractor) {
-        try {
-            entityManager.getTransaction().begin();
-            update(contractor);
-            entityManager.getTransaction().commit();
-        } catch (PersistenceException error) {
-            error.printStackTrace();
-            entityManager.getTransaction().rollback();
-        }
-    }
 }

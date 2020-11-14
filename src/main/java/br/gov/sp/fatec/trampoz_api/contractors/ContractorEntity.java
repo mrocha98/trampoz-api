@@ -2,6 +2,7 @@ package br.gov.sp.fatec.trampoz_api.contractors;
 
 import br.gov.sp.fatec.trampoz_api.jobs.JobEntity;
 import br.gov.sp.fatec.trampoz_api.users.UserEntity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -26,6 +27,7 @@ public class ContractorEntity extends UserEntity {
     @Column(name = "con_company_logo_link", columnDefinition = "text")
     private String companyLogoLink;
 
+    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "contractor")
     private Set<JobEntity> jobs;
 }
