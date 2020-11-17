@@ -49,4 +49,14 @@
         <servlet-name>contractorsServlet</servlet-name>
         <url-pattern>/contractors</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>jobsServlet</servlet-name>
+        <servlet-class>br.gov.sp.fatec.trampoz_api.jobs.JobsController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>jobsServlet</servlet-name>
+        <url-pattern>/jobs</url-pattern>
+    </servlet-mapping>
+
 </web-app>

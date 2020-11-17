@@ -1,7 +1,6 @@
 package br.gov.sp.fatec.trampoz_api.freelancers;
 
-import br.gov.sp.fatec.trampoz_api.shared.LocationHeaderUtils;
-import br.gov.sp.fatec.trampoz_api.users.UserEntity;
+import br.gov.sp.fatec.trampoz_api.utils.LocationHeaderUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
@@ -31,17 +30,25 @@ public class FreelancersController extends HttpServlet {
 
         PrintWriter out = res.getWriter();
 
-        UUID id = UUID.fromString(req.getParameter("id"));
+        String idParam = req.getParameter("id");
+        if (idParam == null) {
+            res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            ObjectNode responseJson = objectMapper.createObjectNode().put("error", "Missing id");
+            out.print(responseJson);
+            out.flush();
+            return;
+        }
+        UUID id = UUID.fromString(idParam);
         FreelancerEntity freelancer = freelancersService.findById(id);
 
-        if (freelancer != null) {
-            String responseJson = objectMapper.writeValueAsString(freelancer);
-            out.print(responseJson);
-            res.setStatus(HttpServletResponse.SC_OK);
-        } else {
+        if (freelancer == null) {
             ObjectNode freelancerJson = objectMapper.createObjectNode().put("error", "user not found");
             out.print(freelancerJson);
             res.setStatus(HttpServletResponse.SC_NOT_FOUND);
+        } else {
+            String responseJson = objectMapper.writeValueAsString(freelancer);
+            out.print(responseJson);
+            res.setStatus(HttpServletResponse.SC_OK);
         }
         out.flush();
     }

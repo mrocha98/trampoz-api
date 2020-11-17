@@ -79,13 +79,13 @@ CREATE TABLE job_job
     job_id              uuid primary key,
     con_id              uuid       not null,
     jnew_id             uuid,
-    job_publishing_date date    default now(),
+    job_title           text       not null,
     job_description     text,
+    job_publishing_date date    default now(),
     job_city            text       not null,
     job_state           varchar(2) not null,
     job_is_remote       boolean default false,
     job_is_open         boolean default true,
-    constraint job_job_uk unique (con_id, job_publishing_date),
     constraint job_con_fk foreign key (con_id) references con_contractor (con_id),
     constraint job_new_fk foreign key (jnew_id) references new_newsletter (new_id)
 );
