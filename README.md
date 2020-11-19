@@ -1,7 +1,7 @@
 <div align="center">
     <h1>TrampoZ - API</h1>
     <img alt="TrampoZ logo" src=".github/images/logo.svg"
-    style="height: 128px; width: 128px;" />
+    style="height: 32px; width: 32px;" />
 </div>
 
 <p align="center">
