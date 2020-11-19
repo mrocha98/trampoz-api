@@ -25,4 +25,4 @@ services:
     container_name: trampoz-adminer
     restart: unless-stopped
     ports:
-      - 8080:8080
+      - 8000:8080
