@@ -42,6 +42,7 @@ public class AuthFilter implements Filter {
                         .build());
         this.permissionsByUrls.put("/contractors",
                 PermissionsByHttpMethod.builder()
+                        .GET(new HashSet<>())
                         .POST(new HashSet<>())
                         .build());
         this.permissionsByUrls.put("/jobs",
