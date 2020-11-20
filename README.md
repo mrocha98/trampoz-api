@@ -15,7 +15,7 @@
 </p>
 
 <div align="center">
-  <a href="#" target="_blank"><img src="https://insomnia.rest/images/run.svg" alt="Run in Insomnia"/></a>
+  <a href="https://insomnia.rest/run/?label=TrampoZ&uri=https%3A%2F%2Fgithub.com%2Fmrocha98%2Ftrampoz-api%2Fblob%2Fmaster%2Ftrampoz-api-insomnia.json" target="_blank"><img src="https://insomnia.rest/images/run.svg" alt="Run in Insomnia"/></a>
 </div>
 
 Índice:
