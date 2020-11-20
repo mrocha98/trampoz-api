@@ -33,6 +33,15 @@
     </filter-mapping>
 
     <servlet>
+        <servlet-name>pingServlet</servlet-name>
+        <servlet-class>br.gov.sp.fatec.trampoz_api.ping.PingController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>pingServlet</servlet-name>
+        <url-pattern>/ping</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
         <servlet-name>freelancersServlet</servlet-name>
         <servlet-class>br.gov.sp.fatec.trampoz_api.freelancers.FreelancersController</servlet-class>
     </servlet>

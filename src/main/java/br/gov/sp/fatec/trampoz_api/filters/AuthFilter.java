@@ -35,9 +35,13 @@ public class AuthFilter implements Filter {
     private List<String> whiteListUrls;
 
     private void initPermissionsByUrls() {
+        this.permissionsByUrls.put("/ping",
+                PermissionsByHttpMethod.builder()
+                        .GET(new HashSet<>())
+                        .build());
         this.permissionsByUrls.put("/freelancers",
                 PermissionsByHttpMethod.builder()
-                        .GET(new HashSet<>(Arrays.asList(RolesEnum.ADMIN, RolesEnum.FREELANCER,RolesEnum.CONTRACTOR)))
+                        .GET(new HashSet<>(Arrays.asList(RolesEnum.ADMIN, RolesEnum.FREELANCER, RolesEnum.CONTRACTOR)))
                         .POST(new HashSet<>())
                         .build());
         this.permissionsByUrls.put("/contractors",
