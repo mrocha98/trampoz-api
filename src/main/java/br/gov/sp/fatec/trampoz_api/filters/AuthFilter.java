@@ -37,7 +37,7 @@ public class AuthFilter implements Filter {
     private void initPermissionsByUrls() {
         this.permissionsByUrls.put("/ping",
                 PermissionsByHttpMethod.builder()
-                        .GET(new HashSet<>())
+                        .GET(new HashSet<>(Arrays.asList(RolesEnum.ADMIN)))
                         .build());
         this.permissionsByUrls.put("/freelancers",
                 PermissionsByHttpMethod.builder()
