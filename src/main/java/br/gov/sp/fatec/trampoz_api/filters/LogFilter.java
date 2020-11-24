@@ -24,12 +24,12 @@ public class LogFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
-        Long startTime = System.currentTimeMillis();
+        long startTime = System.currentTimeMillis();
 
         try {
             chain.doFilter(req, res);
         } finally {
-            Long elapsedTime = System.currentTimeMillis() - startTime;
+            long elapsedTime = System.currentTimeMillis() - startTime;
 
             HttpServletRequest request = (HttpServletRequest) req;
             HttpServletResponse response = (HttpServletResponse) res;
@@ -39,7 +39,7 @@ public class LogFilter implements Filter {
                     request.getMethod(),
                     request.getRequestURI(),
                     String.valueOf(response.getStatus()),
-                    elapsedTime.toString().concat("ms")
+                    Long.toString(elapsedTime).concat("ms")
             ));
 
             StringBuilder logMessage = new StringBuilder();
