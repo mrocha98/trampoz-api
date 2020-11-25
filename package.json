@@ -1,0 +1,27 @@
+{
+    "name": "trampoz-api",
+    "version": "1.0.0",
+    "main": "mock/index.js",
+    "repository": "git@github.com:mrocha98/trampoz-api.git",
+    "author": "Matheus Rocha <matheus_rocha98@outlook.com>",
+    "license": "BSD-3-Clause",
+    "scripts": {
+        "lint": "standard --fix",
+        "populate": "node mock"
+    },
+    "engines": {
+        "node": ">=12.x",
+        "yarn": ">=1.2"
+    },
+    "dependencies": {
+        "axios": "^0.21.0",
+        "consola": "^2.15.0",
+        "date-fns": "^2.16.1",
+        "faker": "^5.1.0",
+        "lodash": "^4.17.20",
+        "readline-sync": "^1.4.10"
+    },
+    "devDependencies": {
+        "standard": "^16.0.3"
+    }
+}
