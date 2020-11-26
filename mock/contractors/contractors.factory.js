@@ -11,7 +11,7 @@ class ContractorsFactory {
       gender: faker.random.arrayElement(['M', 'F']),
       cnpj: faker.random.uuid().slice(0, 14),
       companyName: faker.company.companyName(),
-      companyLogoLink: faker.image.business()
+      companyLogoLink: `${faker.image.imageUrl()}?random=${Date.now()}`
     }
   }
 }
