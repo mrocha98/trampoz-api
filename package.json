@@ -14,7 +14,7 @@
         "yarn": ">=1.2"
     },
     "dependencies": {
-        "axios": "^0.21.0",
+        "axios": "^0.21.1",
         "consola": "^2.15.0",
         "date-fns": "^2.16.1",
         "faker": "^5.1.0",
